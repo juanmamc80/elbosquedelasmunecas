@@ -1,1 +1,1224 @@
-hola
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Bosque de las Muñecas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F7F0E6;
+    --cream-dark: #EDE3D4;
+    --bark: #6B4C3B;
+    --bark-light: #9B7260;
+    --moss: #4A6741;
+    --moss-light: #7A9E6E;
+    --rose: #C97B84;
+    --rose-light: #E8B4BA;
+    --amber: #D4874E;
+    --text: #2C1F1A;
+    --text-muted: #6B5A52;
+    --leaf: #8BAD7C;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--text);
+    font-family: 'Lora', Georgia, serif;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 4rem;
+    background: rgba(247, 240, 230, 0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(107, 76, 59, 0.12);
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    color: var(--bark);
+    letter-spacing: 0.02em;
+    text-decoration: none;
+  }
+
+  .nav-logo span { font-style: italic; color: var(--moss); }
+
+  nav ul {
+    list-style: none;
+    display: flex; gap: 2.5rem;
+  }
+
+  nav ul a {
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    transition: color 0.3s;
+  }
+
+  nav ul a:hover { color: var(--bark); }
+
+  .nav-cta {
+    background: var(--bark) !important;
+    color: var(--cream) !important;
+    padding: 0.55rem 1.4rem !important;
+    border-radius: 2rem !important;
+    letter-spacing: 0.06em !important;
+    transition: background 0.3s !important;
+    text-transform: none !important;
+    font-family: 'Lora', serif !important;
+    font-size: 0.9rem !important;
+  }
+
+  .nav-cta:hover { background: var(--moss) !important; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding-top: 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0; pointer-events: none;
+    background:
+      radial-gradient(ellipse 60% 80% at 80% 50%, rgba(74, 103, 65, 0.07) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 15% 80%, rgba(201, 123, 132, 0.08) 0%, transparent 70%);
+  }
+
+  /* decorative leaves */
+  .leaf-deco {
+    position: absolute; pointer-events: none; opacity: 0.18;
+    font-size: 8rem; line-height: 1;
+  }
+  .leaf-deco.tl { top: 6rem; left: -1rem; transform: rotate(-20deg); }
+  .leaf-deco.br { bottom: 3rem; right: 0rem; transform: rotate(15deg); font-size: 12rem; }
+  .leaf-deco.mr { top: 30%; right: 2rem; font-size: 5rem; transform: rotate(40deg); }
+
+  .hero-text {
+    padding: 5rem 4rem 5rem 5rem;
+    position: relative; z-index: 1;
+    animation: fadeUp 1s ease both;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.78rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--moss);
+    margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 2rem; height: 1px;
+    background: var(--moss);
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 5vw, 4.8rem);
+    line-height: 1.1;
+    color: var(--bark);
+    margin-bottom: 1.5rem;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--moss);
+    display: block;
+  }
+
+  .hero-desc {
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: var(--text-muted);
+    max-width: 440px;
+    margin-bottom: 2.5rem;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    background: var(--bark);
+    color: var(--cream);
+    text-decoration: none;
+    padding: 1rem 2.2rem;
+    border-radius: 3rem;
+    font-family: 'Lora', serif;
+    font-size: 0.95rem;
+    letter-spacing: 0.03em;
+    transition: background 0.3s, transform 0.2s;
+  }
+
+  .btn-primary:hover { background: var(--moss); transform: translateY(-2px); }
+
+  .btn-secondary {
+    display: inline-block;
+    border: 1.5px solid var(--bark-light);
+    color: var(--bark);
+    text-decoration: none;
+    padding: 0.95rem 2rem;
+    border-radius: 3rem;
+    font-family: 'Lora', serif;
+    font-size: 0.95rem;
+    letter-spacing: 0.03em;
+    margin-left: 1rem;
+    transition: border-color 0.3s, color 0.3s;
+  }
+
+  .btn-secondary:hover { border-color: var(--moss); color: var(--moss); }
+
+  .hero-image {
+    position: relative; z-index: 1;
+    display: flex; align-items: center; justify-content: center;
+    padding: 4rem 4rem 4rem 2rem;
+    animation: fadeIn 1.4s ease both;
+  }
+
+  /* Big illustrated card */
+  .hero-card {
+    width: 100%;
+    max-width: 400px;
+    background: white;
+    border-radius: 2rem;
+    overflow: hidden;
+    box-shadow: 0 24px 60px rgba(107, 76, 59, 0.18);
+    position: relative;
+  }
+
+  .hero-card-img {
+    width: 100%;
+    aspect-ratio: 4/5;
+    background: linear-gradient(160deg, #e8d5c4 0%, #d4b89e 40%, #b89078 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-card-img::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at 30% 20%, rgba(255,255,255,0.25) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(74,103,65,0.2) 0%, transparent 40%);
+  }
+
+  .hero-doll-emoji { position: relative; z-index: 1; filter: drop-shadow(0 8px 16px rgba(107,76,59,0.3)); }
+
+  .hero-card-body { padding: 1.5rem; }
+
+  .doll-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--bark);
+    margin-bottom: 0.3rem;
+  }
+
+  .doll-age {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+
+  .doll-tags {
+    display: flex; flex-wrap: wrap; gap: 0.4rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .tag {
+    font-size: 0.75rem;
+    padding: 0.3rem 0.75rem;
+    border-radius: 2rem;
+    background: var(--cream-dark);
+    color: var(--bark-light);
+    font-family: 'Lora', serif;
+  }
+
+  .tag.green { background: rgba(74,103,65,0.1); color: var(--moss); }
+  .tag.rose { background: rgba(201,123,132,0.12); color: var(--rose); }
+
+  .hero-card .btn-adopt {
+    width: 100%;
+    text-align: center;
+    background: var(--rose);
+    color: white;
+    padding: 0.85rem;
+    border-radius: 1.5rem;
+    font-family: 'Lora', serif;
+    font-size: 0.9rem;
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    transition: background 0.3s;
+    display: block;
+  }
+
+  .hero-card .btn-adopt:hover { background: var(--bark); }
+
+  .floating-badge {
+    position: absolute;
+    top: 1.2rem; right: 1.2rem;
+    background: var(--moss);
+    color: white;
+    font-family: 'Lora', serif;
+    font-size: 0.7rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 2rem;
+    letter-spacing: 0.06em;
+  }
+
+  /* ── HOW IT WORKS ── */
+  .section {
+    padding: 6rem 5rem;
+  }
+
+  .section-label {
+    font-size: 0.78rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--moss);
+    text-align: center;
+    margin-bottom: 0.75rem;
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    color: var(--bark);
+    text-align: center;
+    margin-bottom: 0.75rem;
+  }
+
+  h2 em { font-style: italic; color: var(--moss); }
+
+  .section-sub {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 1rem;
+    line-height: 1.8;
+    max-width: 520px;
+    margin: 0 auto 4rem;
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .step {
+    text-align: center;
+    padding: 2rem 1.5rem;
+    background: white;
+    border-radius: 1.5rem;
+    border: 1px solid rgba(107,76,59,0.08);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .step:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(107,76,59,0.12); }
+
+  .step-icon {
+    font-size: 3rem;
+    margin-bottom: 1.2rem;
+    display: block;
+  }
+
+  .step h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: var(--bark);
+    margin-bottom: 0.75rem;
+  }
+
+  .step p {
+    font-size: 0.9rem;
+    line-height: 1.75;
+    color: var(--text-muted);
+  }
+
+  /* ── DOLLS GRID ── */
+  .dolls-section {
+    background: white;
+    padding: 6rem 5rem;
+  }
+
+  .dolls-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .doll-card {
+    border-radius: 1.5rem;
+    overflow: hidden;
+    background: var(--cream);
+    border: 1px solid rgba(107,76,59,0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+  }
+
+  .doll-card:hover { transform: translateY(-8px); box-shadow: 0 20px 50px rgba(107,76,59,0.15); }
+
+  .doll-card-img {
+    aspect-ratio: 1;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 7rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .dc1 .doll-card-img { background: linear-gradient(135deg, #f0d5c8, #e2b09c); }
+  .dc2 .doll-card-img { background: linear-gradient(135deg, #d5e8d5, #a8c8a0); }
+  .dc3 .doll-card-img { background: linear-gradient(135deg, #e8d5e8, #c8a0c8); }
+  .dc4 .doll-card-img { background: linear-gradient(135deg, #d5dde8, #9ab0c8); }
+  .dc5 .doll-card-img { background: linear-gradient(135deg, #e8e8d5, #c8c8a0); }
+  .dc6 .doll-card-img { background: linear-gradient(135deg, #e8d5d5, #c8a0a0); }
+
+  .doll-card-body { padding: 1.25rem 1.5rem 1.5rem; }
+
+  .doll-card .doll-name { font-size: 1.2rem; margin-bottom: 0.2rem; }
+
+  .doll-card .doll-desc {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.65;
+    margin-bottom: 1rem;
+    font-style: italic;
+  }
+
+  .doll-card .doll-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .doll-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: var(--bark);
+  }
+
+  .btn-adopt-sm {
+    background: var(--bark);
+    color: white;
+    padding: 0.5rem 1.2rem;
+    border-radius: 2rem;
+    font-family: 'Lora', serif;
+    font-size: 0.8rem;
+    text-decoration: none;
+    transition: background 0.3s;
+    letter-spacing: 0.04em;
+    border: none;
+    cursor: pointer;
+  }
+
+  .btn-adopt-sm:hover { background: var(--moss); }
+
+  .available-badge {
+    position: absolute;
+    bottom: 0.8rem; left: 0.8rem;
+    background: rgba(74,103,65,0.85);
+    color: white;
+    font-size: 0.7rem;
+    padding: 0.25rem 0.65rem;
+    border-radius: 2rem;
+    letter-spacing: 0.06em;
+  }
+
+  .adopted-badge {
+    position: absolute;
+    bottom: 0.8rem; left: 0.8rem;
+    background: rgba(107,76,59,0.7);
+    color: white;
+    font-size: 0.7rem;
+    padding: 0.25rem 0.65rem;
+    border-radius: 2rem;
+    letter-spacing: 0.06em;
+  }
+
+  /* ── QUOTE / FILOSOFÍA ── */
+  .philosophy {
+    padding: 7rem 5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .philosophy-bg {
+    position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(ellipse 70% 70% at 50% 50%, rgba(74,103,65,0.06) 0%, transparent 70%);
+  }
+
+  blockquote {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.5rem, 2.5vw, 2.2rem);
+    font-style: italic;
+    color: var(--bark);
+    max-width: 720px;
+    margin: 0 auto 2rem;
+    line-height: 1.6;
+    position: relative; z-index: 1;
+  }
+
+  blockquote::before {
+    content: '"';
+    display: block;
+    font-size: 6rem;
+    line-height: 0.5;
+    color: var(--moss-light);
+    opacity: 0.4;
+    margin-bottom: 1rem;
+  }
+
+  .quote-attr {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    position: relative; z-index: 1;
+  }
+
+  /* ── TESTIMONIALS ── */
+  .testimonials {
+    background: var(--cream-dark);
+    padding: 6rem 5rem;
+  }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .testi-card {
+    background: white;
+    border-radius: 1.25rem;
+    padding: 1.75rem;
+    border: 1px solid rgba(107,76,59,0.08);
+  }
+
+  .stars {
+    color: var(--amber);
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.1em;
+  }
+
+  .testi-text {
+    font-size: 0.9rem;
+    line-height: 1.8;
+    color: var(--text-muted);
+    font-style: italic;
+    margin-bottom: 1.2rem;
+  }
+
+  .testi-author {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--bark);
+    letter-spacing: 0.05em;
+  }
+
+  .testi-sub {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  /* ── NEWSLETTER ── */
+  .newsletter {
+    background: var(--bark);
+    padding: 5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .newsletter::before {
+    content: '🌿';
+    position: absolute;
+    font-size: 14rem;
+    opacity: 0.06;
+    top: -2rem; left: -3rem;
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .newsletter::after {
+    content: '🍂';
+    position: absolute;
+    font-size: 10rem;
+    opacity: 0.06;
+    bottom: -1rem; right: -1rem;
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .newsletter h2 { color: var(--cream); }
+  .newsletter .section-label { color: var(--rose-light); }
+  .newsletter .section-sub { color: rgba(247,240,230,0.7); }
+
+  .newsletter-form {
+    display: flex;
+    gap: 0.75rem;
+    max-width: 440px;
+    margin: 0 auto;
+    position: relative; z-index: 1;
+  }
+
+  .newsletter-form input {
+    flex: 1;
+    padding: 0.9rem 1.4rem;
+    border-radius: 3rem;
+    border: none;
+    background: rgba(247,240,230,0.15);
+    color: var(--cream);
+    font-family: 'Lora', serif;
+    font-size: 0.9rem;
+    outline: none;
+    border: 1.5px solid rgba(247,240,230,0.2);
+    transition: border-color 0.3s;
+  }
+
+  .newsletter-form input::placeholder { color: rgba(247,240,230,0.5); }
+  .newsletter-form input:focus { border-color: rgba(247,240,230,0.5); }
+
+  .newsletter-form button {
+    background: var(--rose);
+    color: white;
+    border: none;
+    padding: 0.9rem 1.75rem;
+    border-radius: 3rem;
+    font-family: 'Lora', serif;
+    font-size: 0.9rem;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.3s;
+  }
+
+  .newsletter-form button:hover { background: var(--moss); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--text);
+    color: rgba(247,240,230,0.6);
+    padding: 3rem 5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  footer .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--cream);
+    font-style: italic;
+  }
+
+  footer p { font-size: 0.82rem; }
+
+  footer a { color: rgba(247,240,230,0.5); text-decoration: none; margin-left: 1.5rem; font-size: 0.82rem; }
+  footer a:hover { color: var(--cream); }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(44,31,26,0.65);
+    display: flex; align-items: center; justify-content: center;
+    padding: 2rem;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.35s;
+  }
+
+  .modal-overlay.active { opacity: 1; pointer-events: all; }
+
+  .modal {
+    background: var(--cream);
+    border-radius: 2rem;
+    max-width: 520px;
+    width: 100%;
+    overflow: hidden;
+    transform: scale(0.94) translateY(20px);
+    transition: transform 0.35s;
+    position: relative;
+  }
+
+  .modal-overlay.active .modal { transform: scale(1) translateY(0); }
+
+  .modal-img {
+    aspect-ratio: 16/9;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 8rem;
+  }
+
+  .modal-body { padding: 2rem 2.5rem 2.5rem; }
+
+  .modal-body h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    color: var(--bark);
+    margin-bottom: 0.2rem;
+  }
+
+  .modal-trait {
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--moss);
+    margin-bottom: 1.2rem;
+  }
+
+  .modal-body p {
+    font-size: 0.95rem;
+    line-height: 1.85;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+    font-style: italic;
+  }
+
+  .modal-details {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .detail-item {
+    background: white;
+    border-radius: 1rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .detail-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 0.25rem;
+  }
+
+  .detail-val {
+    font-size: 0.88rem;
+    color: var(--text);
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 1rem; right: 1rem;
+    background: white;
+    border: none; cursor: pointer;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--bark);
+    transition: background 0.2s;
+  }
+
+  .modal-close:hover { background: var(--cream-dark); }
+
+  .modal-footer-row {
+    display: flex; align-items: center; gap: 1rem;
+  }
+
+  .modal-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    color: var(--bark);
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.96); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-text { padding: 4rem 2rem 2rem; }
+    .hero-image { padding: 2rem; }
+    .steps, .dolls-grid, .testimonials-grid { grid-template-columns: 1fr; }
+    nav { padding: 1rem 1.5rem; }
+    nav ul { display: none; }
+    .section, .dolls-section, .testimonials, .philosophy { padding: 4rem 2rem; }
+    .newsletter { padding: 4rem 2rem; }
+    footer { padding: 2rem; flex-direction: column; text-align: center; }
+    .newsletter-form { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">El Bosque <span>de las Muñecas</span></a>
+  <ul>
+    <li><a href="#adoptar">Adoptar</a></li>
+    <li><a href="#como-funciona">Cómo funciona</a></li>
+    <li><a href="#filosofia">Nuestra filosofía</a></li>
+    <li><a href="#" class="nav-cta">Ver todas las muñecas</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="leaf-deco tl" aria-hidden="true">🌿</div>
+  <div class="leaf-deco br" aria-hidden="true">🍃</div>
+  <div class="leaf-deco mr" aria-hidden="true">🌱</div>
+
+  <div class="hero-text">
+    <div class="hero-eyebrow">Adopciones únicas y artesanales</div>
+    <h1>
+      Cada muñeca lleva<br>
+      <em>su propia historia</em>
+    </h1>
+    <p class="hero-desc">
+      En el Bosque de las Muñecas, no vendemos muñecas. Las acompañamos hasta encontrar
+      el hogar que las estaba esperando. Cada una tiene nombre, sueños y su ropa favorita.
+    </p>
+    <a href="#adoptar" class="btn-primary">Conoce a las muñecas</a>
+    <a href="#como-funciona" class="btn-secondary">Cómo funciona</a>
+  </div>
+
+  <div class="hero-image">
+    <div class="hero-card">
+      <div class="floating-badge">✨ Disponible</div>
+      <div class="hero-card-img">
+        <span class="hero-doll-emoji">🧸</span>
+      </div>
+      <div class="hero-card-body">
+        <div class="doll-name">Sofía del Roble</div>
+        <div class="doll-age">5 añitos · Nacida en otoño</div>
+        <div class="doll-tags">
+          <span class="tag">🍄 Colecciona setas</span>
+          <span class="tag green">🌿 Ama los bosques</span>
+          <span class="tag rose">🎀 Vestido de lino</span>
+        </div>
+        <a href="#" class="btn-adopt" onclick="openModal(0); return false;">Adoptar a Sofía</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CÓMO FUNCIONA -->
+<section id="como-funciona" class="section">
+  <div class="section-label">El proceso de adopción</div>
+  <h2>Tan sencillo como <em>mágico</em></h2>
+  <p class="section-sub">Cada muñeca ya existe antes de llegar a ti. Solo hace falta que la encuentres.</p>
+
+  <div class="steps">
+    <div class="step reveal">
+      <span class="step-icon">🌲</span>
+      <h3>Entra al bosque</h3>
+      <p>Explora nuestra colección de muñecas disponibles. Cada una tiene su ficha completa: carácter, ropa favorita, qué le gusta y qué no.</p>
+    </div>
+    <div class="step reveal" style="transition-delay: 0.15s">
+      <span class="step-icon">💌</span>
+      <h3>Elige a tu compañera</h3>
+      <p>Cuando una muñeca te llame, haz clic en "Adoptar". Recibirás su certificado de adopción personalizado con toda su historia.</p>
+    </div>
+    <div class="step reveal" style="transition-delay: 0.3s">
+      <span class="step-icon">🎁</span>
+      <h3>Llega a casa</h3>
+      <p>Viaja envuelta en papel de seda, con su carta de presentación escrita a mano. Lista para empezar su nueva vida contigo.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MUÑECAS DISPONIBLES -->
+<section id="adoptar" class="dolls-section">
+  <div class="section-label">Esperando un hogar</div>
+  <h2>Las muñecas del <em>bosque</em></h2>
+  <p class="section-sub">Cada una es única, hecha a mano y con una personalidad propia. ¿Con cuál conectas?</p>
+
+  <div class="dolls-grid">
+
+    <div class="doll-card dc1 reveal" onclick="openModal(0)">
+      <div class="doll-card-img">
+        🧸
+        <span class="available-badge">Disponible</span>
+      </div>
+      <div class="doll-card-body">
+        <div class="doll-name">Sofía del Roble</div>
+        <div class="doll-age">Nacida en otoño · 38 cm</div>
+        <div class="doll-desc">"Le encanta recoger hojas caídas y guardarlas en su delantal de lino."</div>
+        <div class="doll-tags" style="margin-bottom:1rem">
+          <span class="tag">🍂 Otoñal</span>
+          <span class="tag green">Amante del bosque</span>
+        </div>
+        <div class="doll-footer">
+          <span class="doll-price">48 €</span>
+          <button class="btn-adopt-sm">Adoptar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="doll-card dc2 reveal" style="transition-delay:0.1s" onclick="openModal(1)">
+      <div class="doll-card-img">
+        🪆
+        <span class="available-badge">Disponible</span>
+      </div>
+      <div class="doll-card-body">
+        <div class="doll-name">Luna de Musgo</div>
+        <div class="doll-age">Nacida en primavera · 42 cm</div>
+        <div class="doll-desc">"Sueña con tener un jardín secreto donde plante flores de lavanda."</div>
+        <div class="doll-tags" style="margin-bottom:1rem">
+          <span class="tag green">🌸 Jardinera</span>
+          <span class="tag">Soñadora</span>
+        </div>
+        <div class="doll-footer">
+          <span class="doll-price">52 €</span>
+          <button class="btn-adopt-sm">Adoptar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="doll-card dc3 reveal" style="transition-delay:0.2s" onclick="openModal(2)">
+      <div class="doll-card-img">
+        🎎
+        <span class="adopted-badge">Ya adoptada</span>
+      </div>
+      <div class="doll-card-body">
+        <div class="doll-name">Iris Violeta</div>
+        <div class="doll-age">Nacida en invierno · 35 cm</div>
+        <div class="doll-desc">"Le encantan los libros ilustrados y el chocolate caliente con nata."</div>
+        <div class="doll-tags" style="margin-bottom:1rem">
+          <span class="tag rose">📚 Lectora</span>
+          <span class="tag">Hogareña</span>
+        </div>
+        <div class="doll-footer">
+          <span class="doll-price" style="color:var(--text-muted)">Adoptada</span>
+          <button class="btn-adopt-sm" style="background:#ccc;cursor:not-allowed">Lista de espera</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="doll-card dc4 reveal" style="transition-delay:0.1s" onclick="openModal(3)">
+      <div class="doll-card-img">
+        🧶
+        <span class="available-badge">Disponible</span>
+      </div>
+      <div class="doll-card-body">
+        <div class="doll-name">Nieva Pino</div>
+        <div class="doll-age">Nacida en invierno · 40 cm</div>
+        <div class="doll-desc">"Teje bufandas para todos sus amigos imaginarios. Siempre tiene agujas en el bolsillo."</div>
+        <div class="doll-tags" style="margin-bottom:1rem">
+          <span class="tag">🧷 Artesana</span>
+          <span class="tag green">Creativa</span>
+        </div>
+        <div class="doll-footer">
+          <span class="doll-price">55 €</span>
+          <button class="btn-adopt-sm">Adoptar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="doll-card dc5 reveal" style="transition-delay:0.2s" onclick="openModal(4)">
+      <div class="doll-card-img">
+        🎀
+        <span class="available-badge">Disponible</span>
+      </div>
+      <div class="doll-card-body">
+        <div class="doll-name">Clea Marigold</div>
+        <div class="doll-age">Nacida en verano · 36 cm</div>
+        <div class="doll-desc">"Colecciona botones y caracoles. Cree que en cada objeto hay una historia escondida."</div>
+        <div class="doll-tags" style="margin-bottom:1rem">
+          <span class="tag">🐚 Coleccionista</span>
+          <span class="tag rose">Curiosa</span>
+        </div>
+        <div class="doll-footer">
+          <span class="doll-price">46 €</span>
+          <button class="btn-adopt-sm">Adoptar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="doll-card dc6 reveal" style="transition-delay:0.3s" onclick="openModal(5)">
+      <div class="doll-card-img">
+        🌺
+        <span class="available-badge">Disponible</span>
+      </div>
+      <div class="doll-card-body">
+        <div class="doll-name">Roja de Cereza</div>
+        <div class="doll-age">Nacida en verano · 44 cm</div>
+        <div class="doll-desc">"Siempre bailando. Su vestido rojo se mueve como si tuviese vida propia."</div>
+        <div class="doll-tags" style="margin-bottom:1rem">
+          <span class="tag rose">💃 Bailarina</span>
+          <span class="tag">Alegre</span>
+        </div>
+        <div class="doll-footer">
+          <span class="doll-price">58 €</span>
+          <button class="btn-adopt-sm">Adoptar</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FILOSOFÍA -->
+<section id="filosofia" class="philosophy">
+  <div class="philosophy-bg"></div>
+  <blockquote>
+    Cada muñeca que sale del bosque lleva bordada un alma. No son juguetes — son pequeñas compañeras que han estado esperando exactamente a ti.
+  </blockquote>
+  <div class="quote-attr">— Clara, creadora de El Bosque de las Muñecas</div>
+</section>
+
+<!-- TESTIMONIOS -->
+<section class="testimonials">
+  <div class="section-label">Familias del bosque</div>
+  <h2>Lo que dicen <em>ellas</em></h2>
+  <p class="section-sub">Cada muñeca que encuentra hogar nos envía noticias de vez en cuando.</p>
+
+  <div class="testimonials-grid">
+    <div class="testi-card reveal">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">"Cuando abrí la caja y leí la carta de Luna, me emocioné. Era como si me conociera de toda la vida. Mi hija la abraza todas las noches."</p>
+      <div class="testi-author">Marta S.</div>
+      <div class="testi-sub">Adoptó a Luna de Musgo · Valencia</div>
+    </div>
+    <div class="testi-card reveal" style="transition-delay:0.1s">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">"La atención es exquisita. El embalaje, la carta a mano, los detalles... es un regalo que va mucho más allá de una muñeca. Es una experiencia."</p>
+      <div class="testi-author">Lucía R.</div>
+      <div class="testi-sub">Adoptó a Sofía del Roble · Madrid</div>
+    </div>
+    <div class="testi-card reveal" style="transition-delay:0.2s">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">"Me resistí meses porque me parecía 'solo una muñeca'. Ahora Nieva Pino tiene su propio rincón en casa y todos le hablamos."</p>
+      <div class="testi-author">Ana M.</div>
+      <div class="testi-sub">Adoptó a Nieva Pino · Barcelona</div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter">
+  <div class="section-label">Sé la primera en saberlo</div>
+  <h2>Nuevas muñecas <em>cada mes</em></h2>
+  <p class="section-sub" style="margin-bottom:2rem">Las más especiales se van rápido. Apúntate y te avisamos antes que nadie cuando llegue una nueva al bosque.</p>
+  <div class="newsletter-form">
+    <input type="email" placeholder="tu@correo.com">
+    <button>Entrar al bosque</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">El Bosque de las Muñecas</div>
+  <p>© 2025 · Muñecas artesanales hechas con amor</p>
+  <div>
+    <a href="#">Política de privacidad</a>
+    <a href="#">Envíos y devoluciones</a>
+    <a href="#">Instagram</a>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal" onclick="closeModalOutside(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-img" id="modal-img"></div>
+    <div class="modal-body">
+      <h3 id="modal-name"></h3>
+      <div class="modal-trait" id="modal-trait"></div>
+      <p id="modal-desc"></p>
+      <div class="modal-details" id="modal-details"></div>
+      <div class="modal-footer-row">
+        <span class="modal-price" id="modal-price"></span>
+        <a href="#" class="btn-primary" style="margin-left:auto" id="modal-btn">Iniciar adopción</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const dolls = [
+  {
+    emoji: '🧸',
+    bg: 'linear-gradient(135deg,#f0d5c8,#e2b09c)',
+    name: 'Sofía del Roble',
+    trait: 'Otoñal · Amante del bosque · 38 cm',
+    desc: 'Sofía nació en octubre, cuando el bosque se viste de ocre y rojo. Le encanta recoger hojas caídas y guardarlas en su delantal de lino. Sabe el nombre de todos los árboles y habla con ellos por las mañanas.',
+    details: [
+      { label: 'Ropa favorita', val: 'Delantal de lino crudo' },
+      { label: 'Le encanta', val: 'Recoger setas y hojas' },
+      { label: 'No soporta', val: 'El ruido de la ciudad' },
+      { label: 'Sueño', val: 'Tener una cabaña propia' },
+    ],
+    price: '48 €',
+    available: true,
+  },
+  {
+    emoji: '🪆',
+    bg: 'linear-gradient(135deg,#d5e8d5,#a8c8a0)',
+    name: 'Luna de Musgo',
+    trait: 'Primaveral · Jardinera soñadora · 42 cm',
+    desc: 'Luna llegó con la primera lluvia de abril. Siempre tiene tierra bajo las uñas y semillas en los bolsillos. Habla bajo, como si no quisiese asustar a las plantas. Su lavanda favorita huele a la mañana.',
+    details: [
+      { label: 'Ropa favorita', val: 'Vestido verde con bordados' },
+      { label: 'Le encanta', val: 'Plantar y ver crecer' },
+      { label: 'No soporta', val: 'Las prisas' },
+      { label: 'Sueño', val: 'Un jardín secreto propio' },
+    ],
+    price: '52 €',
+    available: true,
+  },
+  {
+    emoji: '🎎',
+    bg: 'linear-gradient(135deg,#e8d5e8,#c8a0c8)',
+    name: 'Iris Violeta',
+    trait: 'Invernal · Lectora empedernida · 35 cm',
+    desc: 'Iris pasó sus primeros meses leyendo junto a la chimenea. Cada noche pone un marcapáginas de terciopelo antes de dormir. Colecciona palabras raras y las escribe en un cuaderno violeta.',
+    details: [
+      { label: 'Ropa favorita', val: 'Jersey de lana gruesa' },
+      { label: 'Le encanta', val: 'Los cuentos ilustrados' },
+      { label: 'No soporta', val: 'Que le interrumpan leyendo' },
+      { label: 'Sueño', val: 'Escribir su propio libro' },
+    ],
+    price: 'Adoptada',
+    available: false,
+  },
+  {
+    emoji: '🧶',
+    bg: 'linear-gradient(135deg,#d5dde8,#9ab0c8)',
+    name: 'Nieva Pino',
+    trait: 'Invernal · Artesana creativa · 40 cm',
+    desc: 'Nieva teje sin parar. Bufandas, sombreros, pequeñas alfombrillas para los ratones. Dice que tejer es como hacer música con las manos. Siempre tiene agujas en el bolsillo y lana de colores en la mochila.',
+    details: [
+      { label: 'Ropa favorita', val: 'Suéter tejido a mano' },
+      { label: 'Le encanta', val: 'Tejer con agujas de madera' },
+      { label: 'No soporta', val: 'Que se le acabe el hilo' },
+      { label: 'Sueño', val: 'Enseñar a tejer a los demás' },
+    ],
+    price: '55 €',
+    available: true,
+  },
+  {
+    emoji: '🎀',
+    bg: 'linear-gradient(135deg,#e8e8d5,#c8c8a0)',
+    name: 'Clea Marigold',
+    trait: 'Veraniega · Coleccionista curiosa · 36 cm',
+    desc: 'Clea encuentra tesoros donde nadie mira. Un botón dorado, una piedra con forma de corazón, un caracol que suena a mar. Guarda todo en cajitas de madera con etiquetas escritas con cuidado.',
+    details: [
+      { label: 'Ropa favorita', val: 'Blusa de algodón con bolsillos' },
+      { label: 'Le encanta', val: 'Explorar y coleccionar' },
+      { label: 'No soporta', val: 'Tirar cosas "por si acaso"' },
+      { label: 'Sueño', val: 'Un museo de sus hallazgos' },
+    ],
+    price: '46 €',
+    available: true,
+  },
+  {
+    emoji: '🌺',
+    bg: 'linear-gradient(135deg,#e8d5d5,#c8a0a0)',
+    name: 'Roja de Cereza',
+    trait: 'Veraniega · Bailarina alegre · 44 cm',
+    desc: 'Roja baila aunque no haya música. Su vestido rojo gira cuando da vueltas y ella dice que tiene vida propia. Le encantan las tardes de verano, el sonido de las cigarras y el helado de cereza.',
+    details: [
+      { label: 'Ropa favorita', val: 'Vestido rojo con vuelo' },
+      { label: 'Le encanta', val: 'Bailar y cantar descalza' },
+      { label: 'No soporta', val: 'Estar quieta más de 5 minutos' },
+      { label: 'Sueño', val: 'Bailar bajo la lluvia de verano' },
+    ],
+    price: '58 €',
+    available: true,
+  },
+];
+
+function openModal(i) {
+  const d = dolls[i];
+  document.getElementById('modal-img').style.background = d.bg;
+  document.getElementById('modal-img').innerHTML = `<span style="font-size:7rem">${d.emoji}</span>`;
+  document.getElementById('modal-name').textContent = d.name;
+  document.getElementById('modal-trait').textContent = d.trait;
+  document.getElementById('modal-desc').textContent = d.desc;
+  document.getElementById('modal-price').textContent = d.price;
+
+  const det = document.getElementById('modal-details');
+  det.innerHTML = d.details.map(x => `
+    <div class="detail-item">
+      <div class="detail-label">${x.label}</div>
+      <div class="detail-val">${x.val}</div>
+    </div>
+  `).join('');
+
+  const btn = document.getElementById('modal-btn');
+  if (d.available) {
+    btn.textContent = 'Iniciar adopción';
+    btn.style.background = 'var(--bark)';
+    btn.style.pointerEvents = 'all';
+  } else {
+    btn.textContent = 'Lista de espera';
+    btn.style.background = '#aaa';
+    btn.style.pointerEvents = 'none';
+  }
+
+  document.getElementById('modal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function closeModalOutside(e) {
+  if (e.target === document.getElementById('modal')) closeModal();
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(el => {
+    if (el.isIntersecting) { el.target.classList.add('visible'); observer.unobserve(el.target); }
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
