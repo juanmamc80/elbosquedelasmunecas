@@ -2,7 +2,8 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#F7F0E6">
 
 <!-- SEO: Title optimizado -->
 <title>El Bosque de las Muñecas – Muñecas artesanales únicas para adoptar</title>
@@ -93,10 +94,11 @@
   img { max-width: 100%; height: auto; display: block; }
 
   /* ── NAV ── */
-  nav {
+  .site-nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     display: flex; align-items: center; justify-content: space-between;
-    padding: 1rem 1.5rem;
+    padding: 1rem max(1.5rem, env(safe-area-inset-right)) 1rem max(1.5rem, env(safe-area-inset-left));
+    padding-top: max(1rem, env(safe-area-inset-top));
     background: rgba(247, 240, 230, 0.95);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
@@ -115,12 +117,12 @@
   .nav-logo span { font-style: italic; color: var(--moss); }
 
   /* Menú escritorio */
-  nav ul {
+  .site-nav ul {
     list-style: none;
     display: flex; gap: 2rem;
   }
 
-  nav ul a {
+  .site-nav ul a {
     text-decoration: none;
     font-size: 0.85rem;
     letter-spacing: 0.08em;
@@ -130,7 +132,7 @@
     white-space: nowrap;
   }
 
-  nav ul a:hover { color: var(--bark); }
+  .site-nav ul a:hover { color: var(--bark); }
 
   .nav-cta {
     background: var(--bark) !important;
@@ -167,14 +169,21 @@
     height: 2px;
     background: var(--bark);
     border-radius: 2px;
-    transition: all 0.3s;
+    transition: transform 0.3s, opacity 0.3s;
   }
 
-  /* Menú móvil desplegable */
+  /* Hamburguesa → X cuando está abierto */
+  .nav-hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-hamburger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+  .nav-hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* Menú móvil desplegable (top se ajusta por JS a la altura real de la cabecera) */
   .nav-mobile-menu {
     display: none;
     position: fixed;
     top: 58px; left: 0; right: 0;
+    max-height: calc(100dvh - 58px);
+    overflow-y: auto;
     background: var(--cream);
     border-bottom: 1px solid rgba(107, 76, 59, 0.12);
     padding: 1rem 1.5rem 1.5rem;
@@ -216,6 +225,7 @@
   /* ── HERO ── */
   .hero {
     min-height: 100vh;
+    min-height: 100svh;
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: center;
@@ -243,6 +253,14 @@
     padding: 5rem 4rem 5rem 5rem;
     position: relative; z-index: 1;
     animation: fadeUp 1s ease both;
+  }
+
+  /* Logo del hero (en escritorio alineado a la izquierda, sobre el texto) */
+  .hero-logo {
+    display: block;
+    width: min(100%, 320px);
+    margin: 0 0 2rem -0.5rem;
+    filter: drop-shadow(0 10px 22px rgba(107,76,59,0.25));
   }
 
   .hero-eyebrow {
@@ -921,10 +939,20 @@
     .steps, .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
     .dolls-grid { grid-template-columns: repeat(2, 1fr); }
 
-    .hero { grid-template-columns: 1fr; }
+    .hero { grid-template-columns: 1fr; min-height: auto; padding-bottom: 2rem; }
     .hero-image { display: none; } /* Se oculta la card decorativa en tablet/móvil */
 
-    nav ul { display: none; }
+    .hero-text { padding: 2.5rem 2rem 2rem; text-align: center; }
+    .hero-eyebrow { justify-content: center; }
+    .hero-desc { margin-left: auto; margin-right: auto; }
+    .hero-buttons { justify-content: center; }
+
+    .hero-logo {
+      width: min(78%, 360px);
+      margin: 0 auto 1.75rem;
+    }
+
+    .site-nav ul { display: none; }
     .nav-hamburger { display: flex; }
 
     .section, .dolls-section, .testimonials, .philosophy { padding: 4rem 2rem; }
@@ -936,22 +964,18 @@
 
   /* ── RESPONSIVE MÓVIL (≤ 600px) ── */
   @media (max-width: 600px) {
-    nav { padding: 0.85rem 1.25rem; }
+    .site-nav {
+      padding: 0.85rem max(1.25rem, env(safe-area-inset-right)) 0.85rem max(1.25rem, env(safe-area-inset-left));
+      padding-top: max(0.85rem, env(safe-area-inset-top));
+    }
     .nav-logo { font-size: 1rem; }
 
-    .hero {
-      grid-template-columns: 1fr;
-      min-height: auto;
-      padding-top: 4.5rem;
-      padding-bottom: 2rem;
-    }
+    .hero { padding-top: 4.5rem; }
 
-    .hero-text {
-      padding: 2.5rem 1.5rem 2rem;
-      text-align: center;
-    }
+    .hero-text { padding: 1.5rem 1.25rem 1.5rem; }
+    .hero-logo { width: min(82%, 300px); margin-bottom: 1.25rem; }
 
-    .hero-eyebrow { justify-content: center; }
+    .hero-eyebrow { font-size: 0.7rem; letter-spacing: 0.16em; margin-bottom: 1rem; }
     .hero-eyebrow::before { display: none; }
 
     h1 { font-size: clamp(2rem, 8vw, 2.8rem); }
@@ -984,13 +1008,30 @@
     .step { padding: 1.5rem 1.25rem; }
     .step-icon { font-size: 2rem; margin-bottom: 0.75rem; }
 
-    /* Dolls: 1 columna en móvil pequeño */
+    /* Dolls: 1 columna, imagen más apaisada para no alargar tanto el scroll */
     .dolls-grid { grid-template-columns: 1fr; gap: 1.25rem; }
 
-    .doll-card-img { font-size: 5rem; }
+    .doll-card-img { font-size: 4.5rem; aspect-ratio: 16/10; }
 
-    /* Testimonials: 1 columna */
-    .testimonials-grid { grid-template-columns: 1fr; }
+    /* Testimonials: carrusel horizontal deslizable */
+    .testimonials-grid {
+      display: flex;
+      gap: 1rem;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      margin: 0 -1.25rem;
+      padding: 0.25rem 1.25rem 1rem;
+      scroll-padding: 0 1.25rem;
+      scrollbar-width: none;
+    }
+    .testimonials-grid::-webkit-scrollbar { display: none; }
+    .testi-card {
+      flex: 0 0 85%;
+      scroll-snap-align: start;
+    }
+    /* En el carrusel, la animación reveal deja tarjetas invisibles fuera de pantalla */
+    .testimonials-grid .reveal { opacity: 1; transform: none; }
 
     blockquote { font-size: 1.2rem; }
     blockquote::before { font-size: 4rem; }
@@ -1008,22 +1049,27 @@
       border-radius: 1rem;
     }
 
-    /* Modal en móvil */
+    /* 16px evita el zoom automático de iOS al enfocar el campo */
+    .newsletter-form input { font-size: 16px; }
+
+    /* Modal en móvil: hoja inferior */
     .modal-overlay { padding: 0; align-items: flex-end; }
     .modal {
       border-radius: 1.5rem 1.5rem 0 0;
       max-height: 92vh;
+      max-height: 92dvh;
+      margin: 0;
     }
 
-    .modal-img { aspect-ratio: 2/1; font-size: 5rem; }
-    .modal-body { padding: 1.25rem 1.25rem 2rem; }
+    .modal-img { aspect-ratio: 2/1; font-size: 4.5rem; }
+    .modal-body { padding: 1.25rem 1.25rem calc(2rem + env(safe-area-inset-bottom)); }
     .modal-body h3 { font-size: 1.4rem; }
     .modal-details { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
 
     .modal-footer-row { flex-direction: column; align-items: stretch; }
     .modal-footer-row .btn-primary { text-align: center; margin-left: 0; width: 100%; }
 
-    footer { padding: 2rem 1.25rem; gap: 1.25rem; }
+    footer { padding: 2rem 1.25rem calc(2rem + env(safe-area-inset-bottom)); gap: 1.25rem; flex-direction: column; }
     footer .logo { font-size: 1rem; }
     .footer-links { flex-direction: column; gap: 0; align-items: center; }
     .footer-links a { margin-left: 0; text-align: center; }
@@ -1035,6 +1081,19 @@
     .dolls-section { padding: 3rem 1.25rem; }
     .testimonials { padding: 3rem 1.25rem; }
     .newsletter { padding: 3rem 1.25rem; }
+  }
+
+  /* ── PANTALLAS TÁCTILES: sin efectos hover "pegados" ── */
+  @media (hover: none) {
+    .step:hover, .doll-card:hover { transform: none; box-shadow: none; }
+    .btn-primary:hover { transform: none; }
+  }
+
+  /* ── MOVIMIENTO REDUCIDO ── */
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .reveal { opacity: 1; transform: none; }
   }
 
   /* ── ACCESIBILIDAD: Tap targets mínimos ── */
@@ -1051,7 +1110,7 @@
 <body>
 
 <!-- NAV -->
-<nav role="navigation" aria-label="Navegación principal">
+<nav class="site-nav" id="site-nav" aria-label="Navegación principal">
   <a href="#" class="nav-logo" aria-label="El Bosque de las Muñecas - Inicio">El Bosque <span>de las Muñecas</span></a>
 
   <!-- Menú escritorio -->
@@ -1087,6 +1146,10 @@
   <div class="leaf-deco mr" aria-hidden="true">🌱</div>
 
   <div class="hero-text">
+    <picture>
+      <source srcset="bosque.webp" type="image/webp">
+      <img src="bosque.png" alt="El Bosque de las Muñecas" class="hero-logo" width="640" height="522" decoding="async">
+    </picture>
     <div class="hero-eyebrow">Adopciones únicas y artesanales</div>
     <h1>
       Cada muñeca lleva<br>
@@ -1381,7 +1444,7 @@ function openModal(i) {
   const d = dolls[i];
   const mi = document.getElementById('modal-img');
   mi.style.background = d.bg;
-  mi.innerHTML = `<span style="font-size:6rem">${d.emoji}</span>`;
+  mi.innerHTML = `<span>${d.emoji}</span>`;
   document.getElementById('modal-name').textContent = d.name;
   document.getElementById('modal-trait').textContent = d.trait;
   document.getElementById('modal-desc').textContent = d.desc;
@@ -1420,15 +1483,30 @@ function subscribeNewsletter() {
 const hamburger = document.getElementById('hamburger-btn');
 const mobileMenu = document.getElementById('mobile-menu');
 
+const siteNav = document.getElementById('site-nav');
+
 hamburger.addEventListener('click', () => {
+  // Coloca el menú justo bajo la cabecera, sea cual sea su altura real
+  const navH = siteNav.offsetHeight;
+  mobileMenu.style.top = navH + 'px';
+  mobileMenu.style.maxHeight = `calc(100dvh - ${navH}px)`;
   const isOpen = mobileMenu.classList.toggle('open');
   hamburger.setAttribute('aria-expanded', isOpen);
+  hamburger.setAttribute('aria-label', isOpen ? 'Cerrar menú' : 'Abrir menú');
   mobileMenu.setAttribute('aria-hidden', !isOpen);
+});
+
+// Cerrar el menú al tocar fuera de él
+document.addEventListener('click', e => {
+  if (mobileMenu.classList.contains('open') && !mobileMenu.contains(e.target) && !hamburger.contains(e.target)) {
+    closeMobileMenu();
+  }
 });
 
 function closeMobileMenu() {
   mobileMenu.classList.remove('open');
   hamburger.setAttribute('aria-expanded', 'false');
+  hamburger.setAttribute('aria-label', 'Abrir menú');
   mobileMenu.setAttribute('aria-hidden', 'true');
 }
 
